@@ -27,6 +27,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      - name: Install musl sharp binary for Alpine Docker action
+        run: npm install --no-save --os=linux --libc=musl --cpu=x64 sharp
       - uses: athombv/github-action-homey-app-validate@master
         with:
           level: verified
