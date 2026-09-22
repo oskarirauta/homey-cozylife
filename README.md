@@ -37,15 +37,30 @@ Control your **CozyLife** and **DoHome** smart switches locally on **Homey Pro**
 
 ## Installation & Pairing
 
-### Prerequisites
-1. Set up the switch on your Wi-Fi network using the CozyLife mobile app or local provisioning.
-2. **Recommended:** Assign a static IP or DHCP reservation for the switch in your Wi-Fi router settings so the IP address remains constant.
+### 1. Connecting the Switch to Your Wi-Fi
 
-### Pairing in Homey
+Before pairing with Homey, the switch must first be connected to your local 2.4 GHz Wi-Fi network.
+
+> [!IMPORTANT]
+> **For Apple HomeKit-enabled CozyLife devices (especially when using an iPhone):**
+> - CozyLife devices with Apple HomeKit firmware broadcast using Apple's Wireless Accessory Configuration (WAC).
+> - On iOS, the setup SSID appears in Wi-Fi settings exclusively under **"Set up new device / Add to Apple Home"**, and iOS will prevent direct Wi-Fi connection to that SSID through the standard CozyLife app. Computers may also not discover or connect to the temporary setup SSID.
+> - **How to onboard:**
+>   1. Open the native **Apple Home** app on your iPhone (or tap the accessory under iOS Wi-Fi settings).
+>   2. Scan the HomeKit QR code or enter the 8-digit code located on the switch or manual.
+>   3. Complete the setup in Apple Home to join the switch to your local Wi-Fi.
+>   4. Once connected to Wi-Fi, the switch automatically opens TCP port `5555` locally on your network for Homey to communicate with! *(You can keep the accessory in Apple Home or remove it if you only intend to use Homey).*
+> - **For non-HomeKit CozyLife devices or Android devices:** Follow the standard onboarding process using the CozyLife mobile app.
+
+### 2. IP Address & Static DHCP Reservation
+1. Once the switch is on your Wi-Fi, locate its IP address in your Wi-Fi router's DHCP client list.
+2. **Strongly recommended:** Assign a **static DHCP reservation** (fixed IP) for the switch in your router settings so its IP address remains constant across reboots.
+
+### 3. Pairing in Homey
 1. Open the Homey app and tap **+ (Add Device)**.
-2. Search for **CozyLife** and select the device driver matching your switch (1, 2, 3, or 4 Gang).
+2. Search for **CozyLife** and select the driver matching your switch (**1-Gang, 2-Gang, 3-Gang, or 4-Gang**).
 3. Enter the **IP address** of the switch (default port is `5555`).
-4. Homey will establish a local socket connection, probe the switch, and pair the device.
+4. Homey will establish a local socket connection, verify the switch, and pair the device.
 
 ---
 
