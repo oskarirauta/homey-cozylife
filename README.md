@@ -1,6 +1,6 @@
 # CozyLife & DoHome for Homey Pro
 
-Control your **CozyLife** and **DoHome** smart switches locally on **Homey Pro** via TCP socket (port 5555) — **100% cloud-free, fast, and reliable**.
+Control your **CozyLife**, **DoHome**, and **Doiting** smart switches locally on **Homey Pro** via TCP socket (port 5555) — **100% cloud-free, fast, and reliable**.
 
 [![Homey SDK](https://img.shields.io/badge/Homey_SDK-v3-blue.svg)](https://apps.developer.homey.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -31,7 +31,15 @@ Control your **CozyLife** and **DoHome** smart switches locally on **Homey Pro**
 | **3-Gang Switch** | Triple relay switch | `onoff.gang1`, `onoff.gang2`, `onoff.gang3` |
 | **4-Gang Switch** | Quad relay switch | `onoff.gang1`, `onoff.gang2`, `onoff.gang3`, `onoff.gang4` |
 
-*Compatible with CozyLife and DoHome Wi-Fi smart switches and relays.*
+*Compatible with CozyLife, DoHome, and Doiting Wi-Fi smart switches and relays.*
+
+> [!NOTE]
+> **Brand & Manufacturer Names (Doiting / DoHome / CozyLife):**
+> These devices are manufactured by **Doiting** (Shenzhen Doctors of Intelligence & Technology / SZDoit), the developer of the DoHome/CozyLife IoT module platform. When pairing or checking device details:
+> - Apple HomeKit may show the manufacturer as **"Doiting"** and the model as **"CozyLife smart switch"**.
+> - The pairing SSID during setup is typically named `CozyLife-XXXX` or `DoHome_XXXX`.
+> - Router client lists may show hostnames matching `cozylife`, `dohome`, or `doit`.
+> All these variants run the same local TCP protocol (port 5555) and are fully supported by this app.
 
 ---
 
