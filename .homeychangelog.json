@@ -1,0 +1,6 @@
+{
+  "1.0.0": {
+    "en": "Initial release: Local TCP control for 1, 2, 3, and 4-gang CozyLife, DoHome, and Doiting smart switches.",
+    "fi": "Ensimmäinen julkaisu: Paikallinen TCP-ohjaus 1-, 2-, 3- ja 4-kytkimille (CozyLife, DoHome, Doiting)."
+  }
+}
