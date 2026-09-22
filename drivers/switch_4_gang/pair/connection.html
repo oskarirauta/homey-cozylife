@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .grid_center {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .input_ip_address {
+      background-color: #fafafa;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 14pt;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<header class="homey-header">
+  <h1 class="homey-title" data-i18n="pair.title">Add CozyLife Switch</h1>
+  <p class="homey-subtitle" data-i18n="pair.subtitle">Connect directly via local Wi-Fi (port 5555)</p>
+</header>
+
+<form class="homey-form" id="pairForm">
+  <fieldset class="homey-form-fieldset">
+    <div class="homey-form-group">
+      <label class="homey-form-label" for="ipaddress" data-i18n="pair.ip_label">Device IP Address</label>
+      <div class="input_ip_address">
+        <input class="homey-form-input" id="ipaddress" type="text" placeholder="192.168.1.50" maxlength="15" required autofocus>
+      </div>
+      <p class="homey-form-input-help" data-i18n="pair.ip_hint">Enter the local IP address of the CozyLife switch.</p>
+    </div>
+  </fieldset>
+
+  <button class="homey-button-primary-full" id="submit" data-i18n="pair.connect_button">Connect</button>
+</form>
+
+<script type="text/javascript">
+  Homey.setTitle(Homey.__('pair.title'));
+
+  document.getElementById('pairForm').onsubmit = (e) => {
+    e.preventDefault();
+    const ipaddress = document.getElementById("ipaddress").value.trim();
+    if (!ipaddress) return;
+
+    Homey.showLoadingOverlay(Homey.__('pair.connecting'));
+
+    Homey.emit('connection_details_entered', { ipaddress }, (err, result) => {
+      Homey.hideLoadingOverlay();
+      if (err) {
+        Homey.alert(err.message || err, 'error');
+      } else {
+        Homey.nextView();
+      }
+    });
+  };
+</script>
+</body>
+</html>

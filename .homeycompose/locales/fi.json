@@ -1,0 +1,28 @@
+{
+  "pair": {
+    "title": "Lisää CozyLife-kytkin",
+    "subtitle": "Yhdistä suoraan paikallisverkossa (portti 5555)",
+    "ip_label": "Laitteen IP-osoite",
+    "ip_placeholder": "esim. 192.168.1.50",
+    "ip_hint": "Syötä CozyLife-kytkimen paikallinen IP-osoite. Suosittelemme kiinteän IP-varauksen (DHCP reservation) tekemistä reitittimestä.",
+    "connect_button": "Yhdistä",
+    "connecting": "Yhdistetään CozyLife-kytkimeen...",
+    "invalid_ip": "Anna kelvollinen IPv4-osoite.",
+    "device_found": "CozyLife-kytkin löytyi! Lisätään laite..."
+  },
+  "settings": {
+    "ip": {
+      "title": "IP-osoite",
+      "hint": "Kytkimen paikallinen IP-osoite."
+    },
+    "poll_interval": {
+      "title": "Kyselyväli (sekuntia)",
+      "hint": "Kuinka usein tila varmistetaan (tilamuutokset tulevat reaaliajassa laitteelta)."
+    }
+  },
+  "errors": {
+    "connection_failed": "Yhteys CozyLife-laitteeseen osoitteessa {ip}:{port} epäonnistui",
+    "timeout": "Yhteys CozyLife-laitteeseen aikakatkaistiin",
+    "invalid_response": "Virheellinen vastaus CozyLife-laitteelta"
+  }
+}

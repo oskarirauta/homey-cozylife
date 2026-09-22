@@ -1,0 +1,184 @@
+{
+  "triggers": [
+    {
+      "id": "switch_4_gang_turned_on",
+      "title": {
+        "en": "Gang turned on",
+        "fi": "Kytkin kytkeytyi päälle"
+      },
+      "titleFormatted": {
+        "en": "[[gang]] turned on",
+        "fi": "[[gang]] kytkeytyi päälle"
+      },
+      "args": [
+        {
+          "name": "gang",
+          "type": "dropdown",
+          "title": {
+            "en": "Gang",
+            "fi": "Kytkin / Nappi"
+          },
+          "values": [
+            { "id": "1", "label": { "en": "Gang 1", "fi": "Nappi 1" } },
+            { "id": "2", "label": { "en": "Gang 2", "fi": "Nappi 2" } },
+            { "id": "3", "label": { "en": "Gang 3", "fi": "Nappi 3" } },
+            { "id": "4", "label": { "en": "Gang 4", "fi": "Nappi 4" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "switch_4_gang_turned_off",
+      "title": {
+        "en": "Gang turned off",
+        "fi": "Kytkin kytkeytyi pois päältä"
+      },
+      "titleFormatted": {
+        "en": "[[gang]] turned off",
+        "fi": "[[gang]] kytkeytyi pois päältä"
+      },
+      "args": [
+        {
+          "name": "gang",
+          "type": "dropdown",
+          "title": {
+            "en": "Gang",
+            "fi": "Kytkin / Nappi"
+          },
+          "values": [
+            { "id": "1", "label": { "en": "Gang 1", "fi": "Nappi 1" } },
+            { "id": "2", "label": { "en": "Gang 2", "fi": "Nappi 2" } },
+            { "id": "3", "label": { "en": "Gang 3", "fi": "Nappi 3" } },
+            { "id": "4", "label": { "en": "Gang 4", "fi": "Nappi 4" } }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "switch_4_gang_is_on",
+      "title": {
+        "en": "Gang is on",
+        "fi": "Kytkin on päällä"
+      },
+      "titleFormatted": {
+        "en": "[[gang]] is on",
+        "fi": "[[gang]] on päällä"
+      },
+      "args": [
+        {
+          "name": "gang",
+          "type": "dropdown",
+          "title": {
+            "en": "Gang",
+            "fi": "Kytkin / Nappi"
+          },
+          "values": [
+            { "id": "1", "label": { "en": "Gang 1", "fi": "Nappi 1" } },
+            { "id": "2", "label": { "en": "Gang 2", "fi": "Nappi 2" } },
+            { "id": "3", "label": { "en": "Gang 3", "fi": "Nappi 3" } },
+            { "id": "4", "label": { "en": "Gang 4", "fi": "Nappi 4" } }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "switch_4_gang_turn_on",
+      "title": {
+        "en": "Turn gang on",
+        "fi": "Kytke nappi päälle"
+      },
+      "titleFormatted": {
+        "en": "Turn [[gang]] on",
+        "fi": "Kytke [[gang]] päälle"
+      },
+      "args": [
+        {
+          "name": "gang",
+          "type": "dropdown",
+          "title": {
+            "en": "Gang",
+            "fi": "Kytkin / Nappi"
+          },
+          "values": [
+            { "id": "1", "label": { "en": "Gang 1", "fi": "Nappi 1" } },
+            { "id": "2", "label": { "en": "Gang 2", "fi": "Nappi 2" } },
+            { "id": "3", "label": { "en": "Gang 3", "fi": "Nappi 3" } },
+            { "id": "4", "label": { "en": "Gang 4", "fi": "Nappi 4" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "switch_4_gang_turn_off",
+      "title": {
+        "en": "Turn gang off",
+        "fi": "Kytke nappi pois päältä"
+      },
+      "titleFormatted": {
+        "en": "Turn [[gang]] off",
+        "fi": "Kytke [[gang]] pois päältä"
+      },
+      "args": [
+        {
+          "name": "gang",
+          "type": "dropdown",
+          "title": {
+            "en": "Gang",
+            "fi": "Kytkin / Nappi"
+          },
+          "values": [
+            { "id": "1", "label": { "en": "Gang 1", "fi": "Nappi 1" } },
+            { "id": "2", "label": { "en": "Gang 2", "fi": "Nappi 2" } },
+            { "id": "3", "label": { "en": "Gang 3", "fi": "Nappi 3" } },
+            { "id": "4", "label": { "en": "Gang 4", "fi": "Nappi 4" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "switch_4_gang_toggle",
+      "title": {
+        "en": "Toggle gang",
+        "fi": "Vaihda napin tilaa"
+      },
+      "titleFormatted": {
+        "en": "Toggle [[gang]]",
+        "fi": "Vaihda [[gang]] tilaa"
+      },
+      "args": [
+        {
+          "name": "gang",
+          "type": "dropdown",
+          "title": {
+            "en": "Gang",
+            "fi": "Kytkin / Nappi"
+          },
+          "values": [
+            { "id": "1", "label": { "en": "Gang 1", "fi": "Nappi 1" } },
+            { "id": "2", "label": { "en": "Gang 2", "fi": "Nappi 2" } },
+            { "id": "3", "label": { "en": "Gang 3", "fi": "Nappi 3" } },
+            { "id": "4", "label": { "en": "Gang 4", "fi": "Nappi 4" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "switch_4_gang_all_on",
+      "title": {
+        "en": "Turn all gangs on",
+        "fi": "Kytke kaikki napit päälle"
+      }
+    },
+    {
+      "id": "switch_4_gang_all_off",
+      "title": {
+        "en": "Turn all gangs off",
+        "fi": "Kytke kaikki napit pois päältä"
+      }
+    }
+  ]
+}

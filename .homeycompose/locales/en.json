@@ -1,0 +1,28 @@
+{
+  "pair": {
+    "title": "Add CozyLife Switch",
+    "subtitle": "Connect directly via local Wi-Fi (port 5555)",
+    "ip_label": "Device IP Address",
+    "ip_placeholder": "e.g. 192.168.1.50",
+    "ip_hint": "Enter the local IP address of the CozyLife switch. We recommend setting a DHCP reservation in your router.",
+    "connect_button": "Connect",
+    "connecting": "Connecting to CozyLife switch...",
+    "invalid_ip": "Please enter a valid IPv4 address.",
+    "device_found": "CozyLife switch found! Adding device..."
+  },
+  "settings": {
+    "ip": {
+      "title": "IP Address",
+      "hint": "Local IP address of the switch."
+    },
+    "poll_interval": {
+      "title": "Polling Interval (seconds)",
+      "hint": "How often to poll state as a fallback (push updates are active)."
+    }
+  },
+  "errors": {
+    "connection_failed": "Could not connect to CozyLife device at {ip}:{port}",
+    "timeout": "Connection to CozyLife device timed out",
+    "invalid_response": "Invalid response received from CozyLife device"
+  }
+}

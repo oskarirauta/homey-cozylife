@@ -1,0 +1,33 @@
+[
+  {
+    "id": "ip",
+    "type": "text",
+    "label": {
+      "en": "IP Address",
+      "fi": "IP-osoite"
+    },
+    "hint": {
+      "en": "Local IP address of the switch",
+      "fi": "Kytkimen paikallinen IP-osoite"
+    },
+    "value": ""
+  },
+  {
+    "id": "port",
+    "type": "number",
+    "label": {
+      "en": "TCP Port",
+      "fi": "TCP-portti"
+    },
+    "value": 5555
+  },
+  {
+    "id": "poll_interval",
+    "type": "number",
+    "label": {
+      "en": "Polling Interval (seconds)",
+      "fi": "Kyselyväli (sekuntia)"
+    },
+    "value": 30
+  }
+]
