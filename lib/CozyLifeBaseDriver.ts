@@ -108,12 +108,48 @@ export abstract class CozyLifeBaseDriver extends Homey.Driver {
   }
 
   async onPair(session: PairSession): Promise<void> {
-    let discoveredDevice: any = null;
+    let discoveredDevices: any[] = [];
+
+    const createPairDevice = (ip: string, info: any) => ({
+      name: `${this.defaultDeviceName} (${ip})`,
+      data: {
+        id: info.did || `cozylife_${ip.replace(/\./g, '_')}`
+      },
+      settings: {
+        ip,
+        port: 5555,
+        poll_interval: 30
+      }
+    });
+
+    session.setHandler('discover_devices', async () => {
+      const addresses = new Set<string>();
+      for (const strategyId of ['cozylife_hap', 'cozylife_http']) {
+        const strategy = this.homey.discovery.getStrategy(strategyId);
+        for (const result of Object.values(strategy.getDiscoveryResults()) as any[]) {
+          if (result.address && net.isIPv4(result.address)) addresses.add(result.address);
+        }
+      }
+
+      this.log(`Probing ${addresses.size} discovery result(s) for CozyLife devices`);
+      const devices = await Promise.all([...addresses].map(async (ip) => {
+        try {
+          const info = await CozyLifeClient.probe(ip, 5555, 2500);
+          return createPairDevice(ip, info);
+        } catch (err: any) {
+          this.log(`Ignoring discovery result ${ip}: ${err.message}`);
+          return null;
+        }
+      }));
+
+      discoveredDevices = devices.filter(Boolean);
+      return discoveredDevices;
+    });
 
     session.setHandler('connection_details_entered', async (data: { ipaddress: string }) => {
       this.log(`Pairing request received for IP:`, data.ipaddress);
 
-      if (!data.ipaddress || !net.isIP(data.ipaddress.trim())) {
+      if (!data.ipaddress || !net.isIPv4(data.ipaddress.trim())) {
         throw new Error(this.homey.__('pair.invalid_ip'));
       }
 
@@ -123,17 +159,7 @@ export abstract class CozyLifeBaseDriver extends Homey.Driver {
         const info = await CozyLifeClient.probe(ip, 5555, 4000);
         this.log(`Probe successful:`, info);
 
-        discoveredDevice = {
-          name: `${this.defaultDeviceName} (${ip})`,
-          data: {
-            id: info.did || `cozylife_${ip.replace(/\./g, '_')}`
-          },
-          settings: {
-            ip,
-            port: 5555,
-            poll_interval: 30
-          }
-        };
+        discoveredDevices = [createPairDevice(ip, info)];
 
         return true;
       } catch (err: any) {
@@ -142,11 +168,6 @@ export abstract class CozyLifeBaseDriver extends Homey.Driver {
       }
     });
 
-    session.setHandler('list_devices', async () => {
-      if (discoveredDevice) {
-        return [discoveredDevice];
-      }
-      return [];
-    });
+    session.setHandler('list_devices', async () => discoveredDevices);
   }
 }

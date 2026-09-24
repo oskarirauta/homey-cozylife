@@ -3,58 +3,75 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    .grid_center {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .input_ip_address {
-      background-color: #fafafa;
-      font-family: "Courier New", Courier, monospace;
-      font-size: 14pt;
-      width: 100%;
-    }
+    .status { text-align: center; margin: 16px 0; }
+    .manual { margin-top: 24px; }
+    .input_ip_address { background-color: #fafafa; font-family: monospace; font-size: 14pt; width: 100%; }
   </style>
 </head>
 <body>
-
 <header class="homey-header">
   <h1 class="homey-title" data-i18n="pair.title">Add CozyLife Switch</h1>
-  <p class="homey-subtitle" data-i18n="pair.subtitle">Connect directly via local Wi-Fi (port 5555)</p>
+  <p class="homey-subtitle" data-i18n="pair.subtitle">Finding switches on your local network</p>
+  <p class="homey-form-input-help" data-i18n="pair.setup_hint">The switch must already be connected to the same Wi-Fi network as Homey. HomeKit models must remain added to Apple Home.</p>
 </header>
 
-<form class="homey-form" id="pairForm">
-  <fieldset class="homey-form-fieldset">
-    <div class="homey-form-group">
-      <label class="homey-form-label" for="ipaddress" data-i18n="pair.ip_label">Device IP Address</label>
-      <div class="input_ip_address">
-        <input class="homey-form-input" id="ipaddress" type="text" placeholder="192.168.1.50" maxlength="15" required autofocus>
-      </div>
-      <p class="homey-form-input-help" data-i18n="pair.ip_hint">Enter the local IP address of the CozyLife switch.</p>
-    </div>
-  </fieldset>
+<div class="status" id="status" data-i18n="pair.searching">Searching for CozyLife switches…</div>
+<button class="homey-button-primary-full" id="search" data-i18n="pair.search_again">Search again</button>
 
-  <button class="homey-button-primary-full" id="submit" data-i18n="pair.connect_button">Connect</button>
-</form>
+<details class="manual">
+  <summary data-i18n="pair.manual_title">Can't find your switch?</summary>
+  <p class="homey-form-input-help" data-i18n="pair.manual_hint">You can enter its IPv4 address manually.</p>
+  <form class="homey-form" id="pairForm">
+    <fieldset class="homey-form-fieldset">
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="ipaddress" data-i18n="pair.ip_label">Device IP Address</label>
+        <div class="input_ip_address">
+          <input class="homey-form-input" id="ipaddress" type="text" inputmode="decimal" placeholder="192.168.1.50" maxlength="15" required>
+        </div>
+      </div>
+    </fieldset>
+    <button class="homey-button-secondary-full" data-i18n="pair.connect_button">Connect manually</button>
+  </form>
+</details>
 
 <script type="text/javascript">
   Homey.setTitle(Homey.__('pair.title'));
 
-  document.getElementById('pairForm').onsubmit = (e) => {
-    e.preventDefault();
-    const ipaddress = document.getElementById("ipaddress").value.trim();
-    if (!ipaddress) return;
+  async function discover() {
+    const button = document.getElementById('search');
+    const status = document.getElementById('status');
+    button.disabled = true;
+    status.textContent = Homey.__('pair.searching');
+    Homey.showLoadingOverlay(Homey.__('pair.searching'));
 
-    Homey.showLoadingOverlay(Homey.__('pair.connecting'));
-
-    Homey.emit('connection_details_entered', { ipaddress }, (err, result) => {
+    Homey.emit('discover_devices', {}, (err, devices) => {
       Homey.hideLoadingOverlay();
+      button.disabled = false;
       if (err) {
-        Homey.alert(err.message || err, 'error');
-      } else {
+        status.textContent = err.message || err;
+      } else if (devices && devices.length) {
+        status.textContent = Homey.__('pair.devices_found').replace('{count}', devices.length);
         Homey.nextView();
+      } else {
+        status.textContent = Homey.__('pair.no_devices_found');
       }
     });
+  }
+
+  document.getElementById('search').onclick = discover;
+  document.getElementById('pairForm').onsubmit = (event) => {
+    event.preventDefault();
+    const ipaddress = document.getElementById('ipaddress').value.trim();
+    if (!ipaddress) return;
+    Homey.showLoadingOverlay(Homey.__('pair.connecting'));
+    Homey.emit('connection_details_entered', { ipaddress }, (err) => {
+      Homey.hideLoadingOverlay();
+      if (err) Homey.alert(err.message || err, 'error');
+      else Homey.nextView();
+    });
   };
+
+  discover();
 </script>
 </body>
 </html>

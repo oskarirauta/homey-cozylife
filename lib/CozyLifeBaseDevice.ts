@@ -1,4 +1,5 @@
 import Homey from 'homey';
+import net from 'net';
 import { CozyLifeClient, isGangOn } from './CozyLifeClient';
 
 export abstract class CozyLifeBaseSwitchDevice extends Homey.Device {
@@ -11,16 +12,16 @@ export abstract class CozyLifeBaseSwitchDevice extends Homey.Device {
     this.log(`CozyLife Switch (${this.gangCount}-gang) initialized:`, this.getName());
 
     const settings = this.getSettings();
-    const ip = settings.ip;
-    const port = settings.port || 5555;
+    const ip = String(settings.ip ?? '').trim();
+    const port = Number(settings.port ?? 5555);
 
-    if (!ip) {
-      this.error('No IP address configured for device');
-      await this.setUnavailable('No IP address configured');
+    if (!net.isIPv4(ip) || !Number.isInteger(port) || port < 1 || port > 65535) {
+      this.error('Invalid device connection settings');
+      await this.setUnavailable(this.homey.__('errors.invalid_settings'));
       return;
     }
 
-    this.client = new CozyLifeClient(ip, port, (...args) => this.log(...args));
+    this.client = this.createClient(ip, port);
 
     // Register capability listeners
     if (this.gangCount === 1) {
@@ -39,22 +40,6 @@ export abstract class CozyLifeBaseSwitchDevice extends Homey.Device {
       }
     }
 
-    // Handle real-time state updates (from queries or device pushes)
-    this.client.on('state', (bitmask: number) => {
-      this.updateCapabilities(bitmask).catch((err) => {
-        this.error('Failed to update capabilities from bitmask:', err);
-      });
-    });
-
-    this.client.on('connected', async () => {
-      this.log('CozyLife TCP client connected to', ip);
-      await this.setAvailable();
-    });
-
-    this.client.on('disconnected', async () => {
-      this.log('CozyLife TCP client disconnected from', ip);
-    });
-
     // Connect to device
     try {
       await this.client.connect();
@@ -67,6 +52,25 @@ export abstract class CozyLifeBaseSwitchDevice extends Homey.Device {
     // Set up fallback polling (in addition to TCP push)
     const pollInterval = typeof settings.poll_interval === 'number' ? settings.poll_interval : 30;
     this.setupPolling(pollInterval);
+  }
+
+  private createClient(ip: string, port: number): CozyLifeClient {
+    const client = new CozyLifeClient(ip, port, (...args) => this.log(...args));
+
+    client.on('state', (bitmask: number) => {
+      this.updateCapabilities(bitmask).catch((err) => {
+        this.error('Failed to update capabilities from bitmask:', err);
+      });
+    });
+    client.on('connected', () => {
+      this.log('CozyLife TCP client connected to', ip);
+      this.setAvailable().catch(this.error);
+    });
+    client.on('disconnected', () => {
+      this.log('CozyLife TCP client disconnected from', ip);
+    });
+
+    return client;
   }
 
   protected previousBitmask: number | null = null;
@@ -128,18 +132,29 @@ export abstract class CozyLifeBaseSwitchDevice extends Homey.Device {
 
   async onSettings({ newSettings, changedKeys }: { oldSettings: any; newSettings: any; changedKeys: string[] }) {
     this.log('Settings changed:', changedKeys);
+
+    const ip = String(newSettings.ip ?? '').trim();
+    const port = Number(newSettings.port ?? 5555);
+    const pollInterval = Number(newSettings.poll_interval ?? 30);
+
+    if (!net.isIPv4(ip)) {
+      throw new Error(this.homey.__('errors.invalid_ip'));
+    }
+    if (!Number.isInteger(port) || port < 1 || port > 65535) {
+      throw new Error(this.homey.__('errors.invalid_port'));
+    }
+    if (!Number.isFinite(pollInterval) || pollInterval < 5) {
+      throw new Error(this.homey.__('errors.invalid_poll_interval'));
+    }
+
     if (changedKeys.includes('ip') || changedKeys.includes('port')) {
-      if (this.client) {
-        this.client.disconnect();
-      }
-      this.client = new CozyLifeClient(newSettings.ip, newSettings.port || 5555, (...args) => this.log(...args));
-      this.client.on('state', (bitmask: number) => this.updateCapabilities(bitmask));
-      this.client.on('connected', () => this.setAvailable());
-      await this.client.connect().catch(this.error);
+      this.client?.disconnect();
+      this.client = this.createClient(ip, port);
+      await this.client.connect();
     }
 
     if (changedKeys.includes('poll_interval')) {
-      this.setupPolling(newSettings.poll_interval || 30);
+      this.setupPolling(pollInterval);
     }
   }
 

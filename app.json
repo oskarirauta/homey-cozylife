@@ -12,8 +12,8 @@
     "fi": "CozyLife"
   },
   "description": {
-    "en": "Control CozyLife and DoHome smart switches locally",
-    "fi": "Ohjaa CozyLife- ja DoHome-kytkimiä paikallisesti"
+    "en": "Make CozyLife, DoHome, and Doiting switches a private, responsive part of your smart home.",
+    "fi": "Tee CozyLife-, DoHome- ja Doiting-kytkimistä yksityinen ja nopeasti reagoiva osa älykotiasi."
   },
   "category": [
     "appliances",
@@ -1353,5 +1353,21 @@
         ]
       }
     ]
+  },
+  "discovery": {
+    "cozylife_hap": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "_hap",
+        "protocol": "tcp"
+      }
+    },
+    "cozylife_http": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "_http",
+        "protocol": "tcp"
+      }
+    }
   }
 }

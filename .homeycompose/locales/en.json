@@ -1,11 +1,18 @@
 {
   "pair": {
     "title": "Add CozyLife Switch",
-    "subtitle": "Connect directly via local Wi-Fi (port 5555)",
+    "subtitle": "Finding switches on your local network",
+    "setup_hint": "The switch must already be connected to the same Wi-Fi network as Homey. HomeKit models must remain added to Apple Home.",
+    "searching": "Searching for CozyLife switches…",
+    "search_again": "Search again",
+    "devices_found": "Found {count} compatible switch(es).",
+    "no_devices_found": "No switches were found automatically. Make sure the switch is online and on the same network, or enter its address below.",
+    "manual_title": "Can't find your switch?",
+    "manual_hint": "You can enter its IPv4 address manually.",
     "ip_label": "Device IP Address",
     "ip_placeholder": "e.g. 192.168.1.50",
     "ip_hint": "Enter the local IP address of the CozyLife switch. We recommend setting a DHCP reservation in your router.",
-    "connect_button": "Connect",
+    "connect_button": "Connect manually",
     "connecting": "Connecting to CozyLife switch...",
     "invalid_ip": "Please enter a valid IPv4 address.",
     "device_found": "CozyLife switch found! Adding device..."
@@ -23,6 +30,10 @@
   "errors": {
     "connection_failed": "Could not connect to CozyLife device at {ip}:{port}",
     "timeout": "Connection to CozyLife device timed out",
-    "invalid_response": "Invalid response received from CozyLife device"
+    "invalid_response": "Invalid response received from CozyLife device",
+    "invalid_ip": "Enter a valid IPv4 address.",
+    "invalid_port": "Enter a TCP port between 1 and 65535.",
+    "invalid_poll_interval": "The polling interval must be at least 5 seconds.",
+    "invalid_settings": "The saved IP address or port is invalid."
   }
 }

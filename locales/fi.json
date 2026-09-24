@@ -1,14 +1,21 @@
 {
   "pair": {
     "title": "Lisää CozyLife-kytkin",
-    "subtitle": "Yhdistä suoraan paikallisverkossa (portti 5555)",
+    "subtitle": "Etsitään kytkimiä lähiverkosta",
+    "searching": "Etsitään CozyLife-kytkimiä…",
+    "search_again": "Etsi uudelleen",
+    "devices_found": "Löytyi {count} yhteensopivaa kytkintä.",
+    "no_devices_found": "Kytkimiä ei löytynyt automaattisesti. Varmista, että kytkin on päällä ja samassa verkossa, tai syötä sen osoite alle.",
+    "manual_title": "Eikö kytkintä löydy?",
+    "manual_hint": "Voit syöttää sen IPv4-osoitteen käsin.",
     "ip_label": "Laitteen IP-osoite",
     "ip_placeholder": "esim. 192.168.1.50",
     "ip_hint": "Syötä CozyLife-kytkimen paikallinen IP-osoite. Suosittelemme kiinteän IP-varauksen (DHCP reservation) tekemistä reitittimestä.",
-    "connect_button": "Yhdistä",
+    "connect_button": "Yhdistä käsin",
     "connecting": "Yhdistetään CozyLife-kytkimeen...",
     "invalid_ip": "Anna kelvollinen IPv4-osoite.",
-    "device_found": "CozyLife-kytkin löytyi! Lisätään laite..."
+    "device_found": "CozyLife-kytkin löytyi! Lisätään laite...",
+    "setup_hint": "Kytkimen on oltava valmiiksi samassa Wi-Fi-verkossa Homeyn kanssa. HomeKit-mallin on jäätävä lisätyksi Apple Kotiin."
   },
   "settings": {
     "ip": {
@@ -23,6 +30,10 @@
   "errors": {
     "connection_failed": "Yhteys CozyLife-laitteeseen osoitteessa {ip}:{port} epäonnistui",
     "timeout": "Yhteys CozyLife-laitteeseen aikakatkaistiin",
-    "invalid_response": "Virheellinen vastaus CozyLife-laitteelta"
+    "invalid_response": "Virheellinen vastaus CozyLife-laitteelta",
+    "invalid_ip": "Syötä kelvollinen IPv4-osoite.",
+    "invalid_port": "Syötä TCP-portti väliltä 1–65535.",
+    "invalid_poll_interval": "Kyselyvälin on oltava vähintään 5 sekuntia.",
+    "invalid_settings": "Tallennettu IP-osoite tai portti on virheellinen."
   }
 }
