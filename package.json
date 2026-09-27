@@ -1,6 +1,6 @@
 {
   "name": "com.oskarirauta.cozylife",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CozyLife & DoHome local integration for Homey Pro",
   "main": "app.js",
   "scripts": {
